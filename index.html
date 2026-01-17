@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kevin COMBE</title>
+  <style>
+    :root{
+      --bg:#070707;
+      --line:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap{
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+    }
+    .page{
+      width:min(520px, 100%);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .title{
+      font-weight:800;
+      letter-spacing:.6px;
+      text-transform: uppercase;
+      font-size: clamp(22px, 3.2vw, 30px);
+      margin:0;
+      text-align:center;
+    }
+
+    /* PHOTO : aucun contour */
+    .photoBlock{
+      border:0;
+      outline:0;
+      border-radius:0;
+      box-shadow:none;
+      background: transparent;
+      overflow:hidden;
+    }
+
+    .photoFrame{
+      width:100%;
+      height: min(76svh, 720px);
+      min-height: 520px;
+      position:relative;
+      background: transparent;
+    }
+    .photoFrame img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      object-position: center 18%;
+      display:block;
+      filter: contrast(1.02) saturate(.98);
+    }
+    .photoFrame::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:0;
+      height:100px;
+      background: linear-gradient(to top, rgba(0,0,0,.35), transparent);
+      pointer-events:none;
+    }
+
+    /* séparation */
+    .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 0;
+      border-top:1px solid var(--line);
+    }
+
+    /* drapeau : sans pastille */
+    .flag{ display:inline-flex; align-items:center; }
+    .fr{
+      width:22px;height:14px;border-radius:3px;overflow:hidden;
+      display:grid;grid-template-columns:repeat(3,1fr);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .fr span:nth-child(1){background:#0055A4}
+    .fr span:nth-child(2){background:#FFFFFF}
+    .fr span:nth-child(3){background:#EF4135}
+
+    .icons{
+      display:flex;
+      gap:18px;
+      justify-content:flex-end;
+      flex: 1 1 auto;
+      align-items:center;
+    }
+
+    /* ICÔNES : aucune bordure, aucun fond */
+    .iconBtn, .iconLink{
+      width:36px; height:36px;          /* zone cliquable */
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:0 !important;
+      outline:0;
+      background: transparent !important;
+      border-radius: 0;
+      color:#fff;
+      cursor:pointer;
+      text-decoration:none;
+      padding:0;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .iconBtn:hover, .iconLink:hover{
+      opacity:.78;
+      transform: translateY(-1px);
+    }
+    .icon{ width:22px; height:22px; display:block; }
+
+    /* Modals */
+    .backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      opacity:0; pointer-events:none;
+      transition:opacity .2s ease;
+      z-index:50;
+    }
+    .backdrop.on{opacity:1; pointer-events:auto}
+
+    .panel{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      margin:0 auto;
+      width:min(720px, 100%);
+      transform: translateY(110%);
+      transition: transform .22s ease;
+      z-index:60;
+      padding: 0 14px 14px;
+    }
+    .panel.open{ transform: translateY(0); }
+
+    .panelCard{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,10,10,.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 30px 90px rgba(0,0,0,.60);
+      padding:14px;
+    }
+    .panelHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .panelHead h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+      color: var(--text);
+    }
+    .close{
+      width:40px;height:40px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: transparent;
+      color:#fff;
+      cursor:pointer;
+    }
+    .close:hover{ border-color: rgba(255,255,255,.28); }
+
+    .aboutText{
+      margin:0;
+      color: var(--muted);
+      line-height:1.65;
+      white-space:pre-line;
+    }
+
+    /* Form */
+    form{ display:grid; gap:12px; margin-top:6px; }
+    .row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    label{ font-size:.85rem; color: var(--muted); }
+    input, textarea{
+      width:100%;
+      margin-top:6px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+    }
+    textarea{ min-height:120px; resize:vertical; }
+    input:focus, textarea:focus{ border-color: rgba(255,255,255,.28); }
+    .submit{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: transparent;
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .submit:hover{ border-color: rgba(255,255,255,.32); }
+
+    @media (max-width: 520px){
+      .photoFrame{ min-height: 420px; height: 62svh; }
+      .row{ grid-template-columns: 1fr; }
+      .title{ text-align:left; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="page">
+
+      <h1 class="title">Kevin COMBE</h1>
+
+      <section class="photoBlock" aria-label="Photo principale">
+        <div class="photoFrame">
+          <img src="cover.jpg.jpeg" alt="Photo Kevin COMBE">
+        </div>
+
+        <div class="bar" aria-label="Actions">
+          <div class="flag" title="France">
+            <span class="fr" aria-hidden="true"><span></span><span></span><span></span></span>
+          </div>
+
+          <div class="icons">
+            <button class="iconBtn" id="btnAbout" type="button" title="À propos de moi" aria-controls="panelAbout" aria-expanded="false">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 10v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 7h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </button>
+
+            <a class="iconLink" href="https://fr.linkedin.com/in/kevin-combe-a72261167" target="_blank" rel="noreferrer" title="LinkedIn">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 23.5h4V7.98h-4V23.5ZM8 7.98h3.83v2.12h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v9.36h-4v-8.3c0-1.98-.04-4.52-2.75-4.52-2.75 0-3.17 2.15-3.17 4.38v8.44H8V7.98Z"/>
+              </svg>
+            </a>
+
+            <button class="iconBtn" id="btnContact" type="button" title="Me contacter" aria-controls="panelContact" aria-expanded="false">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+                <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <aside class="panel" id="panelAbout" aria-hidden="true">
+    <div class="panelCard">
+      <div class="panelHead">
+        <h2>À propos de moi</h2>
+        <button class="close" type="button" data-close title="Fermer">✕</button>
+      </div>
+
+      <p class="aboutText">Je travaille sur les enjeux politiques, institutionnels et africains, à la croisée de l’analyse, de l’écriture et de l’action publique.
+
+Mon parcours s’est construit au contact direct des institutions : en cabinet municipal, au Parlement, et dans des environnements politiques où la rigueur, la discrétion et la capacité d’analyse sont indispensables. J’y ai contribué à la rédaction de notes et de discours, au suivi de dossiers législatifs, et à la compréhension fine des mécanismes de décision.
+
+En parallèle, j’écris sur les transformations économiques et sociales, avec une attention particulière portée aux liens entre France, Europe et Afrique, et aux enjeux contemporains qui traversent ces espaces.
+
+Je m’intéresse aux faits, aux rapports de force, aux idées — et à la manière dont ils se traduisent concrètement dans les politiques publiques.
+
+Mon travail vise à éclairer, structurer et mettre en perspective, sans posture ni simplification.</p>
+    </div>
+  </aside>
+
+  <aside class="panel" id="panelContact" aria-hidden="true">
+    <div class="panelCard">
+      <div class="panelHead">
+        <h2>Me contacter</h2>
+        <button class="close" type="button" data-close title="Fermer">✕</button>
+      </div>
+
+      <form id="contactForm">
+        <div class="row">
+          <div>
+            <label>Prénom
+              <input name="firstName" autocomplete="given-name" required />
+            </label>
+          </div>
+          <div>
+            <label>Nom
+              <input name="lastName" autocomplete="family-name" required />
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label>Email
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+        </div>
+
+        <div>
+          <label>Message
+            <textarea name="message" required></textarea>
+          </label>
+        </div>
+
+        <button class="submit" type="submit">Envoyer</button>
+      </form>
+    </div>
+  </aside>
+
+  <script>
+    const backdrop = document.getElementById("backdrop");
+    const btnAbout = document.getElementById("btnAbout");
+    const btnContact = document.getElementById("btnContact");
+    const panelAbout = document.getElementById("panelAbout");
+    const panelContact = document.getElementById("panelContact");
+
+    function closeAll(){
+      [panelAbout, panelContact].forEach(p => { p.classList.remove("open"); p.setAttribute("aria-hidden","true"); });
+      [btnAbout, btnContact].forEach(b => b.setAttribute("aria-expanded","false"));
+      backdrop.classList.remove("on");
+    }
+    function openPanel(panel, btn){
+      closeAll();
+      panel.classList.add("open");
+      panel.setAttribute("aria-hidden","false");
+      btn.setAttribute("aria-expanded","true");
+      backdrop.classList.add("on");
+    }
+
+    btnAbout.addEventListener("click", () => openPanel(panelAbout, btnAbout));
+    btnContact.addEventListener("click", () => openPanel(panelContact, btnContact));
+
+    document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", closeAll));
+    backdrop.addEventListener("click", closeAll);
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeAll(); });
+
+    const DEST_EMAIL = "tonemail@exemple.com";
+    document.getElementById("contactForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const subject = encodeURIComponent("Contact - Kevin COMBE");
+      const body = encodeURIComponent(
+        `Prénom: ${fd.get("firstName")}\n` +
+        `Nom: ${fd.get("lastName")}\n` +
+        `Email: ${fd.get("email")}\n\n` +
+        `Message:\n${fd.get("message")}\n`
+      );
+      window.location.href = `mailto:${DEST_EMAIL}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
