@@ -13,9 +13,31 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    /* =========================
+       FONTS (Milton Two - OTF)
+       Place les fichiers ici :
+       /fonts/Milton_Two.otf
+       /fonts/Milton_Two_Bold.otf
+    ========================= */
+    @font-face{
+      font-family: "Milton Two";
+      src: url("fonts/Milton_Two.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face{
+      font-family: "Milton Two";
+      src: url("fonts/Milton_Two_Bold.otf") format("opentype");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Milton Two", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
     }
@@ -34,12 +56,15 @@
       gap:14px;
     }
 
+    /* Titre centré partout + un peu plus petit */
     .title{
-      font-weight:800;
-      letter-spacing:.6px;
+      font-family: "Milton Two", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing:.35px;
       text-transform: uppercase;
-      font-size: clamp(22px, 3.2vw, 30px);
+      font-size: clamp(18px, 2.6vw, 26px);
       margin:0;
+      width:100%;
       text-align:center;
     }
 
@@ -107,7 +132,7 @@
 
     /* ICÔNES : aucune bordure, aucun fond */
     .iconBtn, .iconLink{
-      width:36px; height:36px;          /* zone cliquable */
+      width:36px; height:36px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -170,6 +195,7 @@
       font-size:16px;
       letter-spacing:.2px;
       color: var(--text);
+      font-weight:700;
     }
     .close{
       width:40px;height:40px;
@@ -186,12 +212,13 @@
       color: var(--muted);
       line-height:1.65;
       white-space:pre-line;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* plus lisible */
     }
 
     /* Form */
     form{ display:grid; gap:12px; margin-top:6px; }
     .row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    label{ font-size:.85rem; color: var(--muted); }
+    label{ font-size:.85rem; color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
     input, textarea{
       width:100%;
       margin-top:6px;
@@ -201,6 +228,7 @@
       background: rgba(255,255,255,.04);
       color: var(--text);
       outline:none;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
     textarea{ min-height:120px; resize:vertical; }
     input:focus, textarea:focus{ border-color: rgba(255,255,255,.28); }
@@ -212,13 +240,14 @@
       color:#fff;
       font-weight:800;
       cursor:pointer;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
     .submit:hover{ border-color: rgba(255,255,255,.32); }
 
     @media (max-width: 520px){
       .photoFrame{ min-height: 420px; height: 62svh; }
       .row{ grid-template-columns: 1fr; }
-      .title{ text-align:left; }
+      /* IMPORTANT: on ne met PAS le titre à gauche */
     }
   </style>
 </head>
@@ -368,3 +397,6 @@ Mon travail vise à éclairer, structurer et mettre en perspective, sans posture
   </script>
 </body>
 </html>
+
+   
+
