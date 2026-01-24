@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kevin Combe</title>
 
-  <!-- Favicon (si tu l’as ajouté au repo) -->
+  <!-- Favicon (si présent dans le repo) -->
   <link rel="icon" href="favicon.ico">
 
   <style>
@@ -142,30 +142,31 @@
       overflow:hidden;
       box-shadow: 0 18px 50px rgba(0,0,0,.55);
       transition: .15s ease;
-
-      /* ✅ pour que le titre reste bien en bas */
-      height: 100%;
-      display:flex;
-      flex-direction:column;
     }
     .projCard:hover .frame{
       background: rgba(255,255,255,.08);
       transform: translateY(-1px);
     }
 
-    /* ✅ Preview via image (centré partout, iPhone OK) */
+    /* ✅ Taille "normale" (ratio) pour tous */
     .coverImg{
       width:100%;
-      height: 260px;       /* taille uniforme sur PC */
+      aspect-ratio: 3/4;
       object-fit: cover;
       object-position: center;
       display:block;
       background:#0b0b0b;
     }
 
+    /* ✅ Zoom uniquement pour "Guerre du Liban" (moins de blanc) */
+    .coverImg--liban{
+      transform: scale(1.18);
+      transform-origin: center;
+      object-position: center 62%;
+    }
+
     .meta{
       padding: 10px 12px 12px;
-      margin-top:auto;     /* ✅ pousse le titre en bas */
     }
     .meta h3{
       margin:0;
@@ -335,9 +336,6 @@
       .projGrid{ grid-template-columns: 1fr; gap: 16px; }
       .projBottomGrid{ grid-template-columns: 1fr; gap: 16px; }
 
-      /* ✅ un peu plus grand sur téléphone */
-      .coverImg{ height: 340px; }
-
       .aboutText{ font-size: 0.9rem; }
       .panelCard{ max-height: 74svh; }
     }
@@ -404,7 +402,7 @@
 
             <a class="projCard" href="Guerre du Liban.pdf" target="_blank" rel="noreferrer">
               <div class="frame">
-                <img class="coverImg" src="guerre-du-liban-cover.png" alt="Guerre du Liban">
+                <img class="coverImg coverImg--liban" src="guerre-du-liban-cover.png" alt="Guerre du Liban">
                 <div class="meta">
                   <h3>Guerre du Liban</h3>
                 </div>
