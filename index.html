@@ -50,6 +50,8 @@
       max-width: 78%;
       height:auto;
       opacity:.98;
+      user-select:none;
+      -webkit-user-drag:none;
     }
 
     .photoWrap{
@@ -68,6 +70,8 @@
       display:block;
       background: var(--bg);
       filter: contrast(1.02) saturate(.98);
+      user-select:none;
+      -webkit-user-drag:none;
     }
     .photoWrap::after{
       content:"";
@@ -99,6 +103,7 @@
       text-transform: uppercase;
       font-size: 1.02rem;
       color: rgba(255,255,255,.92);
+      user-select:none;
     }
 
     /* ===== PROJECTS ===== */
@@ -148,13 +153,11 @@
       transform: translateY(-1px);
     }
 
-    /* ✅ Wrapper qui coupe le zoom proprement */
     .coverWrap{
       overflow:hidden;
       background:#0b0b0b;
     }
 
-    /* ✅ Taille "normale" (ratio) pour tous */
     .coverImg{
       width:100%;
       aspect-ratio: 3/4;
@@ -162,9 +165,12 @@
       object-position: center;
       display:block;
       background:#0b0b0b;
+      user-select:none;
+      -webkit-user-drag:none;
+      pointer-events:none; /* évite clic direct sur l'image */
     }
 
-    /* ✅ Zoom local pour réduire le blanc du Liban (sans toucher aux autres) */
+    /* Zoom local pour réduire le blanc du Liban */
     .coverImg--liban{
       transform: scale(1.35);
       transform-origin: center;
@@ -183,6 +189,7 @@
       font-weight: 750;
       color: rgba(255,255,255,.92);
       text-transform: uppercase;
+      user-select:none;
     }
 
     /* ===== ACTIONS ===== */
@@ -234,6 +241,7 @@
       font-size: 0.98rem;
       letter-spacing:.2px;
       color: rgba(255,255,255,.88);
+      user-select:none;
     }
 
     .item:hover .label{ color: #fff; }
@@ -245,6 +253,7 @@
       align-items:center;
       margin-top: 8px;
       opacity:.95;
+      user-select:none;
     }
     .fr{
       width:22px;height:14px;border-radius:3px;overflow:hidden;
@@ -312,6 +321,7 @@
       color: var(--text);
       font-weight:700;
       text-transform: uppercase;
+      user-select:none;
     }
     .close{
       width:40px;height:40px;
@@ -330,6 +340,7 @@
       line-height:1.6;
       white-space:pre-line;
       font-size: 0.95rem;
+      /* tu peux laisser la sélection ici si tu veux */
     }
 
     /* ===== MOBILE ===== */
@@ -340,7 +351,6 @@
       .iconsCol{ align-items:center; }
       .item{ justify-content:center; width:auto; }
 
-      /* ✅ Projets : empilés sur mobile */
       .projGrid{ grid-template-columns: 1fr; gap: 16px; }
       .projBottomGrid{ grid-template-columns: 1fr; gap: 16px; }
 
@@ -365,70 +375,70 @@
         </div>
       </section>
 
-     <!-- ==== PROJETS ==== -->
-<hr class="divider" aria-hidden="true">
-<div class="spacerSm" aria-hidden="true"></div>
+      <!-- ==== PROJETS ==== -->
+      <hr class="divider" aria-hidden="true">
+      <div class="spacerSm" aria-hidden="true"></div>
 
-<section class="projects" aria-label="Mes Projets" id="projects">
-<div class="projectsInner">
-<h2 class="sectionTitle">Mes Projets</h2>
+      <section class="projects" aria-label="Mes Projets" id="projects">
+        <div class="projectsInner">
+          <h2 class="sectionTitle">Mes Projets</h2>
 
-<!-- Haut -->
-<div class="projGrid">
+          <!-- Haut -->
+          <div class="projGrid">
 
-<a class="projCard" href="preview-politiques-economiques-face-a-l-inflation.html">
-<div class="frame">
-<div class="coverWrap">
-<img class="coverImg" src="politiques-economiques-inflation-cover.png" alt="politiques economiques face a l'inflation">
-</div>
-<div class="meta">
-<h3>politiques economiques face a l'inflation</h3>
-</div>
-</div>
-</a>
+            <a class="projCard" href="preview-politiques-economiques-face-a-l-inflation.html" target="_blank" rel="noreferrer">
+              <div class="frame">
+                <div class="coverWrap">
+                  <img class="coverImg" src="politiques-economiques-inflation-cover.png" alt="politiques economiques face a l'inflation">
+                </div>
+                <div class="meta">
+                  <h3>politiques economiques face a l'inflation</h3>
+                </div>
+              </div>
+            </a>
 
-<a class="projCard" href="preview-relations-franco-chinoises.html">
-<div class="frame">
-<div class="coverWrap">
-<img class="coverImg" src="relations-franco-chinoises-cover.png" alt="Relations franco-chinoises">
-</div>
-<div class="meta">
-<h3>Relations franco-chinoises</h3>
-</div>
-</div>
-</a>
+            <a class="projCard" href="preview-relations-franco-chinoises.html" target="_blank" rel="noreferrer">
+              <div class="frame">
+                <div class="coverWrap">
+                  <img class="coverImg" src="relations-franco-chinoises-cover.png" alt="Relations franco-chinoises">
+                </div>
+                <div class="meta">
+                  <h3>Relations franco-chinoises</h3>
+                </div>
+              </div>
+            </a>
 
-</div>
+          </div>
 
-<!-- Bas : JO + Liban -->
-<div class="projBottomGrid">
+          <!-- Bas : JO + Liban -->
+          <div class="projBottomGrid">
 
-<a class="projCard" href="preview-jo-paris-2024.html">
-<div class="frame">
-<div class="coverWrap">
-<img class="coverImg" src="jo-paris-2024-cover.png" alt="JO Paris 2024">
-</div>
-<div class="meta">
-<h3>JO Paris 2024</h3>
-</div>
-</div>
-</a>
+            <a class="projCard" href="preview-jo-paris-2024.html" target="_blank" rel="noreferrer">
+              <div class="frame">
+                <div class="coverWrap">
+                  <img class="coverImg" src="jo-paris-2024-cover.png" alt="JO Paris 2024">
+                </div>
+                <div class="meta">
+                  <h3>JO Paris 2024</h3>
+                </div>
+              </div>
+            </a>
 
-<a class="projCard" href="preview-guerre-du-liban.html">
-<div class="frame">
-<div class="coverWrap">
-<img class="coverImg coverImg--liban" src="guerre-du-liban-cover.png" alt="Guerre du Liban">
-</div>
-<div class="meta">
-<h3>Guerre du Liban</h3>
-</div>
-</div>
-</a>
+            <a class="projCard" href="preview-guerre-du-liban.html" target="_blank" rel="noreferrer">
+              <div class="frame">
+                <div class="coverWrap">
+                  <img class="coverImg coverImg--liban" src="guerre-du-liban-cover.png" alt="Guerre du Liban">
+                </div>
+                <div class="meta">
+                  <h3>Guerre du Liban</h3>
+                </div>
+              </div>
+            </a>
 
-</div>
+          </div>
 
-</div>
-</section>
+        </div>
+      </section>
 
       <!-- ==== ICÔNES ==== -->
       <div class="spacer" aria-hidden="true"></div>
@@ -488,6 +498,19 @@ Mon travail vise à éclairer, structurer et mettre en perspective, sans posture
   </aside>
 
   <script>
+    /* ===== DISSUASION SUR TOUT LE SITE ===== */
+    // clic droit
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // Ctrl/Cmd+S (save) et Ctrl/Cmd+P (print)
+    document.addEventListener("keydown", (e) => {
+      const key = e.key.toLowerCase();
+      const isMac = navigator.platform.toUpperCase().includes("MAC");
+      const mod = isMac ? e.metaKey : e.ctrlKey;
+      if (mod && (key === "s" || key === "p")) e.preventDefault();
+    });
+
+    /* ===== MODALE "À PROPOS" ===== */
     const backdrop = document.getElementById("backdrop");
     const btnAbout = document.getElementById("btnAbout");
     const panelAbout = document.getElementById("panelAbout");
@@ -513,6 +536,8 @@ Mon travail vise à éclairer, structurer et mettre en perspective, sans posture
   </script>
 </body>
 </html>
+
+
 
 
 
